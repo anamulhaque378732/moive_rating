@@ -1,29 +1,25 @@
 import { useState } from "react";
 import './App.css';
-import Footer from './Components/Footer/Footer';
-import Header from './Components/Header/Header';
-import MovieList from './Components/MovieList/MovieList';
-import Sidebar from './Components/Sidebar/Sidebar';
-import { movieContext } from './Contexts/Context';
+import { movieContext, themeContext } from './Contexts/Context';
+import Page from "./Page/Page";
 function App() {
 
 
   const [cardData, setCardData] = useState([]);
-
+  const [darkMood, setDarkMood] = useState(true);
 
   return (
     <>
-      <movieContext.Provider value={{ cardData, setCardData }}>
-        <div className="dark:bg-body   font-[Sora]   text-dark">
-          <Header />
-          <div className="container grid lg:grid-cols-[218px_1fr] gap-[3.5rem]">
-            <Sidebar />
-            <MovieList />
-          </div>
-        </div>
-      </movieContext.Provider>
+      <themeContext.Provider value={{ darkMood, setDarkMood }}>
 
-      <Footer />
+        <movieContext.Provider value={{ cardData, setCardData }}>
+          <Page></Page>
+
+        </movieContext.Provider>
+
+      </themeContext.Provider>
+
+
 
     </>
   )

@@ -3,9 +3,9 @@ import logo from '../../../src/assets/logo.svg';
 import moon from '../../../src/assets/moon.svg';
 import ring from '../../../src/assets/ring.svg';
 import cart from '../../../src/assets/shopping-cart.svg';
-import { movieContext } from '../../Contexts/Context';
+import sun from '../../assets/sun.svg';
+import { movieContext, themeContext } from '../../Contexts/Context';
 import CardDetails from '../CardDetails/CardDetails';
-
 
 
 
@@ -13,7 +13,7 @@ const Header = () => {
 
     const [showCard, setShowCard] = useState(false);
     const { cardData } = useContext(movieContext);
-
+    const { darkMood, setDarkMood } = useContext(themeContext);
 
 
     // console.log(cardData);
@@ -40,8 +40,12 @@ const Header = () => {
                         </a>
                     </li>
                     <li>
-                        <a className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block" href="#">
-                            <img src={moon} width="24" height="24" alt="moon" />
+                        <a onClick={() => setDarkMood(darkMood => !darkMood)}
+                            className="bg-primary/20 dark:bg-primary/[7%] rounded-lg backdrop-blur-[2px] p-1 inline-block" href="#">
+                            <img src={darkMood ? sun : moon}
+                                width="24"
+                                height="24"
+                                alt="moon" />
                         </a>
                     </li>
                     <li>
