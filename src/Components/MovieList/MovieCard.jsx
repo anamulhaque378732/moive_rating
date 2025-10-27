@@ -1,29 +1,34 @@
 import { useContext, useState } from 'react';
+import { toast } from "react-toastify";
 import { movieContext } from '../../Contexts/Context';
 import { getImageUrl } from "../../Utils/Cine-utility";
 import CineRating from "../CineRating/CineRating";
 import MovieDetails from '../MoiveDetailsModal/MovieDetails';
 
 
-
 const MovieCard = ({ movie }) => {
     const [showModal, setShowModal] = useState(false);
     const [selectedMovie, setSelectedMovie] = useState(null);
 
-    const { cardData, setCardData } = useContext(movieContext);
-
+    const { state, dispatch } = useContext(movieContext);
 
     const handleAddToCard = (event, movie) => {
         event.stopPropagation();
-        const found = cardData.find((item) => {
+        const found = state.cardData.find((item) => {
             return item.id === movie.id;
         });
 
         if (!found) {
 
-            setCardData([...cardData, movie])
+            dispatch({
+                type: "ADD_TO_CARD",
+                payload: {
+                    ...movie
+                }
+            })
+            toast.success(`Movie ${movie.title} added Successfully !!`);
         } else {
-            alert(`${movie.title} has been added to the card already !`)
+            toast.error(`${movie.title} has been added to the card already !`);
         }
 
     };
@@ -38,14 +43,9 @@ const MovieCard = ({ movie }) => {
         setShowModal(false);
     };
 
-
-
-
-
     return (
 
         <>
-
             {showModal &&
                 <MovieDetails
                     movie={selectedMovie}

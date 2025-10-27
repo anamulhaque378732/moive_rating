@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { toast } from 'react-toastify';
 import checkOut from "../../assets/checkout.svg";
 import Delete from "../../assets/delete.svg";
 import { movieContext } from "../../Contexts/Context";
@@ -6,17 +7,17 @@ import { getImageUrl } from "../../Utils/Cine-utility";
 
 
 
-
 const CardDetails = ({ onClose }) => {
 
-    const { cardData, setCardData } = useContext(movieContext)
-    const handleDeleteCard = (event, itemId) => {
-        event.preventDefault();
-        const filterItem = cardData.filter((item) => {
-            return item.id !== itemId;
-        });
+    const { state, dispatch } = useContext(movieContext);
 
-        setCardData([...filterItem]);
+    const handleDeleteCard = (event, item) => {
+        event.preventDefault();
+        dispatch({
+            type: "REMOVE_FROM_CARD",
+            payload: item
+        })
+        toast.success(`Removed ${item.title} from the card`)
     };
 
     return (
@@ -33,8 +34,8 @@ const CardDetails = ({ onClose }) => {
                     <div
                         className="space-y-8 lg:space-y-12 max-h-[450px] overflow-auto mb-10 lg:mb-14">
 
-                        {cardData.length === 0 ? (<p className="text-3xl"> The Card is empty</p>) :
-                            cardData.map((item) => (
+                        {state.cardData.length === 0 ? (<p className="text-3xl"> The Card is empty</p>) :
+                            state.cardData.map((item) => (
                                 <div key={item.id} className="grid grid-cols-[1fr_auto] gap-4">
                                     <div className="flex items-center gap-4">
                                         <img
@@ -51,7 +52,7 @@ const CardDetails = ({ onClose }) => {
                                         </div>
                                     </div>
                                     <div className="flex justify-between gap-4 items-center">
-                                        <button onClick={(e) => handleDeleteCard(e, item.id)}
+                                        <button onClick={(e) => handleDeleteCard(e, item)}
                                             className="bg-[#D42967] rounded-md p-2 md:px-4 inline-flex items-center space-x-2 text-white"
                                         >
                                             <img className="w-5 h-5" src={Delete} alt="Delete" />

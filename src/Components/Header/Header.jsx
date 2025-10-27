@@ -12,7 +12,7 @@ import CardDetails from '../CardDetails/CardDetails';
 const Header = () => {
 
     const [showCard, setShowCard] = useState(false);
-    const { cardData } = useContext(movieContext);
+    const { state } = useContext(movieContext);
     const { darkMood, setDarkMood } = useContext(themeContext);
 
 
@@ -56,8 +56,8 @@ const Header = () => {
                                 height="24"
                                 alt="card" />
                             {
-                                cardData.length > 0 && (
-                                    <span className=" rounded-full absolute top-[-12px] left-[28px] bg-[#12CF6F] text-white text-center p-[2px] w-[30px]">{cardData.length
+                                state.cardData.length > 0 && (
+                                    <span className=" rounded-full absolute top-[-12px] left-[28px] bg-[#12CF6F] text-white text-center p-[2px] w-[30px]">{state.cardData.length
                                     }</span>
                                 )
                             }
