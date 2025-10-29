@@ -1,6 +1,6 @@
 import { useReducer, useState } from "react";
 import './App.css';
-import { movieContext, themeContext } from './Contexts/Context';
+import { MovieContext, ThemeContext } from './Contexts/Context';
 import Page from "./Page/Page";
 import { cardReducer, initialState } from "./Reducer/Reducer";
 
@@ -19,14 +19,14 @@ function App() {
 
   return (
     <>
-      <themeContext.Provider value={{ darkMood, setDarkMood }}>
+      <ThemeContext.Provider value={{ darkMood, setDarkMood }}>
 
-        <movieContext.Provider value={{ state, dispatch }}>
+        <MovieContext.Provider value={{ state, dispatch }}>
           <Page />
           <ToastContainer />
-        </movieContext.Provider>
+        </MovieContext.Provider>
 
-      </themeContext.Provider>
+      </ThemeContext.Provider>
 
 
 
